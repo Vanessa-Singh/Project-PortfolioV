@@ -5,12 +5,28 @@ import "./App.css";
 import Headline from "./components/headline/Headline";
 import Search from "./components/search/Search";
 import Weather from "./components/weather/Weather";
+
+//My API key
+const apiKey = "24fce1779d99022f71c6aebca28a5f73";
+
 class App extends Component {
+  //API call function
+  //use async await with the fetch method to make HTTP calls.
+  get_weather = async (e) => {
+    e.preventDefault();
+    const api_call = await fetch(
+      `http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=${apiKey}&units=imperial`
+    );
+    //convert the response to JSON format
+    const data = await api_call.json();
+    console.log(data);
+  }
   render(){
     return (
       <div>
         <Headline pgTitle="Weather Outlook" />
-        <Search />
+        {/* Set up a prop and set it's value to the get_weather function. */}
+        <Search get_weather={this.get_weather}/>
         <Weather />
       </div>
     );
