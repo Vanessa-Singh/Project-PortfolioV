@@ -1,0 +1,11 @@
+import React from "react";
+
+
+const Headline = props => {
+    return (
+         <div>
+         <h1>{props.pgTitle}</h1>
+         </div>
+    );
+}
+export default Headline;
