@@ -7,14 +7,14 @@ import Weather from "../components/weather/Weather";
 const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
 class Main extends Component {
-    state = {
-        temperature: "",
-        city: "",
-        country: "",
-        humidity: "",
-        description: "",
-        error: ""
-    }
+  state = {
+    temperature: "",
+    city: "",
+    country: "",
+    humidity: "",
+    description: "",
+    error: ""
+  };
   //API call function
   //use async await with the fetch method to make HTTP calls.
   get_weather = async e => {
@@ -28,19 +28,32 @@ class Main extends Component {
     );
     //convert the response to JSON format
     const data = await api_call.json();
-    console.log(data); 
-    this.setState({ 
-      temperature: data.main.temp,
-      city: data.name,
-      country: data.sys.country,
-      humidity: data.main.humidity,
-      description: data.weather[0].description,
-      error: "City not found"
-     });
+    if (city && country) {
+      console.log(data);
+      this.setState({
+        temperature: data.main.temp,
+        city: data.name,
+        country: data.sys.country,
+        humidity: data.main.humidity,
+        description: data.weather[0].description,
+        error: ""
+      });
+    }
+    else{
+      this.setState({
+        temperature: "",
+        city: "",
+        country: "",
+        humidity: "",
+        description: "",
+        error: "City not found"
+    });
+  }
+}
+
     //redirect to Current page after submitting the form.
     //this.props.history.push("/Current");
-  };
-
+ 
   render() {
     return (
       <div>
@@ -51,8 +64,8 @@ class Main extends Component {
           takecity={this.takecity}
           takecountry={this.takecountry}
         />
-        <Weather 
-        temp={this.state.temperature} 
+        <Weather
+          temp={this.state.temperature}
           city={this.state.city}
           country={this.state.country}
           humidity={this.state.humidity}

@@ -13,6 +13,7 @@ const Weather = props => {
          {props.temp && (<p>{props.temp}</p>)}
           {props.desc && (<p>{props.desc}</p>)}
           {props.humidity && (<p>Humidity: {props.humidity}</p>)}
+          {props.error && (<p>Error: {props.error}</p>)}
         </div>
       </div>
     );
