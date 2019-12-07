@@ -7,11 +7,9 @@ import Weather from "../components/weather/Weather";
 const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
 class Current extends Component {
-  state = {
-    city: "",
-    country: ""
-  };
-
+    state = {
+        weather: this.props.data
+    }
   //Data Binding
   takecity = e => {
     this.setState({ city: e.target.value });
@@ -31,6 +29,7 @@ class Current extends Component {
     //convert the response to JSON format
     const data = await api_call.json();
     console.log(data);
+    this.setState({weather: data})
   };
 
   render() {
@@ -41,10 +40,14 @@ class Current extends Component {
           takecity={this.takecity}
           takecountry={this.takecountry}
         />
-        <Headline pgTitle={this.state.city + ", " + this.state.country} />
+        <Headline
+          pgTitle={
+            document.search.city.value + ", " + document.search.country.value
+          }
+        />
         {/* Set up a prop and set it's value to the get_weather function. */}
 
-        <Weather />
+        <Weather data={this.state.weather} />
       </div>
     );
   }
