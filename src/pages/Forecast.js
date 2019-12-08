@@ -2,19 +2,18 @@ import React, { Component } from "react";
 import Headline from "../components/headline/Headline";
 import Search from "../components/search/Search";
 import Weather from "../components/weather/Weather";
+
 //React Router
 import { NavLink } from "react-router-dom";
 
 //My API key
 const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
-class Current extends Component {
+class Forecast extends Component {
   state = {
-    temperature: "",
-    city: "",
-    country: "",
-    humidity: "",
-    description: "",
+    forecast: [
+      { temperature: "", city: "", country: "", humidity: "", description: "" }
+    ],
     error: ""
   };
   componentDidMount() {
@@ -26,11 +25,12 @@ class Current extends Component {
         console.log(location);
 
         const api_call = await fetch(
-          `http://api.openweathermap.org/data/2.5/weather?q=${location.city},${location.country}&appid=${apiKey}&units=imperial`
+          `http://api.openweathermap.org/data/2.5/forecast?q=${location.city},${location.country}&appid=${apiKey}&units=imperial`
         );
         //convert the response to JSON format
         const data = await api_call.json();
         this.change_state(data);
+        console.log(data);
       }
     })();
   }
@@ -55,23 +55,25 @@ class Current extends Component {
   };
 
   change_state = data => {
-    if (data.name && data.sys.country) {
-      console.log(data);
+    if (data) {
+      let fivedays = [];
+      for (let i = 0; i < 5; i++) {
+        fivedays[i] = {
+          temperature: data.main.temp,
+          city: data.name,
+          country: data.sys.country,
+          humidity: data.main.humidity,
+          description: data.weather[0].description
+        };
+      }
       this.setState({
-        temperature: data.main.temp,
-        city: data.name,
-        country: data.sys.country,
-        humidity: data.main.humidity,
-        description: data.weather[0].description,
-        error: ""
-      });
+          forecast: fivedays,
+          error: ""
+      })
+
     } else {
       this.setState({
         temperature: "",
-        city: "",
-        country: "",
-        humidity: "",
-        description: "",
         error: "City not found"
       });
     }
@@ -82,10 +84,10 @@ class Current extends Component {
       <div>
         {/* Set it's value to the get_weather function. */}
         <Search get_weather={this.get_weather} />
-        <Headline pgTitle="Current Weather" />
+        <Headline pgTitle="5-days Forecast" />
 
         <nav className="navcontainer">
-          <NavLink to="/">Current Weather</NavLink>
+          <NavLink to="/Current">Current Weather</NavLink>
           <NavLink to="/Forecast">5-days Forecast</NavLink>
         </nav>
 
@@ -101,4 +103,4 @@ class Current extends Component {
     );
   }
 }
-export default Current;
+export default Forecast;
