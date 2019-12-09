@@ -12,7 +12,18 @@ const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 class Forecast extends Component {
   state = {
     forecast: [
-      { temperature: "", city: "", country: "", humidity: "", description: "" }
+      {
+        date: "",
+        temperature: "",
+        description: "",
+        minTemp: "",
+        maxTemp: "",
+        city: "",
+        country: "",
+        humidity: "",
+        windSpeed: "",
+        winddeg: ""
+      }
     ],
     error: ""
   };
@@ -59,18 +70,22 @@ class Forecast extends Component {
       let fivedays = [];
       for (let i = 0; i < 5; i++) {
         fivedays[i] = {
-          temperature: data.main.temp,
-          city: data.name,
-          country: data.sys.country,
-          humidity: data.main.humidity,
-          description: data.weather[0].description
+          date: data.list[i].dt_txt,
+          temperature: data.list[i].main.temp,
+          description: data.list[i].weather[0].description,
+          minTemp: data.list[i].main.temp_min,
+          maxTemp: data.list[i].main.temp_max,
+          city: data.city.name,
+          country: data.city.country,
+          humidity: data.list[i].main.humidity,
+          windSpeed: data.list[i].wind.speed,
+          winddeg: data.list[i].wind.deg
         };
       }
       this.setState({
-          forecast: fivedays,
-          error: ""
-      })
-
+        forecast: fivedays,
+        error: ""
+      });
     } else {
       this.setState({
         temperature: "",
@@ -92,11 +107,16 @@ class Forecast extends Component {
         </nav>
 
         <Weather
-          temp={this.state.temperature}
-          city={this.state.city}
-          country={this.state.country}
-          humidity={this.state.humidity}
-          desc={this.state.description}
+          date={this.state.forecast.date}
+          temp={this.state.forecast.temperature}
+          desc={this.state.forecast.description}
+          minTemp={this.state.forecast.minTemp}
+          maxTemp={this.state.forecast.maxTemp}
+          city={this.state.forecast.city}
+          country={this.state.forecast.country}
+          humidity={this.state.forecast.humidity}
+          windSpeed={this.state.forecast.windSpeed}
+          winddeg={this.state.forecast.winddeg}
           error={this.state.error}
         />
       </div>
