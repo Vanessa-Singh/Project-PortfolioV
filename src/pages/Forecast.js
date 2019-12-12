@@ -85,16 +85,18 @@ class Forecast extends Component {
       for (let i = 0; i < 5; i++) {
         fivedays[i] = {
           date: `${new Date(data.list[i].dt_txt).getDate()} ${this.month_name(
-            new Date(data.list[i].dt_txt))}`,
-          temperature: data.list[i].main.temp,
+            new Date(data.list[i].dt_txt)
+          )}`,
+          icon: data.list[i].weather[0].icon,
+          temperature: Math.round(data.list[i].main.temp),
           description: data.list[i].weather[0].description,
-          minTemp: data.list[i].main.temp_min,
-          maxTemp: data.list[i].main.temp_max,
+          minTemp: Math.round(data.list[i].main.temp_min),
+          maxTemp: Math.round(data.list[i].main.temp_max),
           city: data.city.name,
           country: data.city.country,
-          humidity: data.list[i].main.humidity,
-          windSpeed: data.list[i].wind.speed,
-          winddeg: data.list[i].wind.deg
+          humidity: Math.round(data.list[i].main.humidity),
+          windSpeed: Math.round(data.list[i].wind.speed),
+          winddeg: Math.round(data.list[i].wind.deg)
         };
       }
       this.setState({
@@ -126,22 +128,6 @@ class Forecast extends Component {
         </nav>
 
         {fiveDaysForecast}
-
-        {/*
-        <Weather
-          date={this.state.forecast.date}
-          temp={this.state.forecast.temperature}
-          desc={this.state.forecast.description}
-          minTemp={this.state.forecast.minTemp}
-          maxTemp={this.state.forecast.maxTemp}
-          city={this.state.forecast.city}
-          country={this.state.forecast.country}
-          humidity={this.state.forecast.humidity}
-          windSpeed={this.state.forecast.windSpeed}
-          winddeg={this.state.forecast.winddeg}
-          error={this.state.error}
-        />
-        */}
       </div>
     );
   }

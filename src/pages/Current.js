@@ -90,15 +90,15 @@ class Current extends Component {
           {
             date: `${new Date().getDate()} ${this.month_name(new Date())}`,
             icon: data.weather[0].icon,
-            temperature: data.main.temp,
+            temperature: Math.round(data.main.temp),
             description: data.weather[0].description,
-            minTemp: data.main.temp_min,
-            maxTemp: data.main.temp_max,
+            minTemp: Math.round(data.main.temp_min),
+            maxTemp: Math.round(data.main.temp_max),
             city: data.name,
             country: data.sys.country,
-            humidity: data.main.humidity,
-            windSpeed: data.wind.speed,
-            winddeg: data.wind.deg
+            humidity: Math.round(data.main.humidity),
+            windSpeed: Math.round(data.wind.speed),
+            winddeg: Math.round(data.wind.deg)
           }
         ],
         error: ""
