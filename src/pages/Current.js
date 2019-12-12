@@ -63,15 +63,32 @@ class Current extends Component {
     const data = await api_call.json();
     this.change_state(data);
   };
-
+  //change month number to month name
+  month_name = date => {
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    return months[date.getMonth()];
+  };
   change_state = data => {
     if (data.name && data.sys.country) {
-      console.log(data);
+      console.log(new Date());
       this.setState({
         forecast: [
           ...this.state.forecast,
           {
-            date: new Date().getDate(),
+            date: `${new Date().getDate()} ${this.month_name(new Date())}`,
             icon: data.weather[0].icon,
             temperature: data.main.temp,
             description: data.weather[0].description,

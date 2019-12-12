@@ -61,13 +61,31 @@ class Forecast extends Component {
     //redirect to Current page after submitting the form.
     this.props.history.push("/Current");
   };
-
+  //change month number to month name
+  month_name = date => {
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    return months[date.getMonth()];
+  };
   change_state = data => {
     if (data) {
       let fivedays = [];
       for (let i = 0; i < 5; i++) {
         fivedays[i] = {
-          date: data.list[i].dt_txt,
+          date: `${new Date(data.list[i].dt_txt).getDate()} ${this.month_name(
+            new Date(data.list[i].dt_txt))}`,
           temperature: data.list[i].main.temp,
           description: data.list[i].weather[0].description,
           minTemp: data.list[i].main.temp_min,
