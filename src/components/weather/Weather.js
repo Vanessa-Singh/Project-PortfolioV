@@ -1,25 +1,24 @@
 import React from "react";
-import Headline from "../headline/Headline";
 
 
 const Weather = props => {
+  console.log(props);
     return (
-      <div>
-        {props.city && props.country && (
-          <Headline pgTitle={props.city + ", " + props.country} />
+      <div key={props.id}>
+        {props.val.date && (<p>{props.val.date}</p>)}
+        {props.val.temperature && (<p>{props.val.temperature}°F</p>)}
+        {props.val.description && (<p>{props.val.description}</p>)}
+        {props.val.minTemp && (<p>Min Temp: {props.val.minTemp}°</p>)}
+        {props.val.maxTemp && (<p>Max Temp: {props.val.maxTemp}°</p>)}
+        {props.val.humidity && (<p>Humidity: {props.val.humidity}%</p>)}
+        {props.val.windSpeed && props.val.winddeg && (
+          <div>
+            <p>Wind:</p>
+            <p>Speed: {props.val.windSpeed}mph</p>
+            <p>Direction: {props.val.winddeg}°</p>
+          </div>
         )}
-
-        <div>
-         {props.temp && (<p>{props.temp}°F</p>)}
-          {props.desc && (<p>{props.desc}</p>)}
-          {props.minTemp && (<p>Min Temp: {props.minTemp}°</p>)}
-          {props.maxTemp && (<p>Max Temp: {props.maxTemp}°</p>)}
-          {props.humidity && (<p>Humidity: {props.humidity}%</p>)}
-          {props.windSpeed && props.winddeg && (<div><p>Wind:</p>
-          <p>Speed: {props.windSpeed}mph</p>
-          <p>Direction: {props.winddeg}°</p></div>)}
-          {props.error && (<p>Error: {props.error}</p>)}
-        </div>
+        {props.val.error && (<p>Error: {props.val.error}</p>)}
       </div>
     );
   }

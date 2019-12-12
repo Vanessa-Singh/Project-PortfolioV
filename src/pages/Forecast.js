@@ -14,6 +14,7 @@ class Forecast extends Component {
     forecast: [
       {
         date: "",
+        icon: "",
         temperature: "",
         description: "",
         minTemp: "",
@@ -57,12 +58,8 @@ class Forecast extends Component {
     let location = { city: city, country: country };
     sessionStorage.setItem("location", JSON.stringify(location));
 
-    const api_call = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=imperial`
-    );
-    //convert the response to JSON format
-    const data = await api_call.json();
-    this.change_state(data);
+    //redirect to Current page after submitting the form.
+    this.props.history.push("/Current");
   };
 
   change_state = data => {
@@ -95,6 +92,10 @@ class Forecast extends Component {
   };
 
   render() {
+    //Populate the forecast data to be render
+    let fiveDaysForecast = this.state.forecast.map((key, data) => {
+      return <Weather val={key} key={data} />;
+    });
     return (
       <div>
         {/* Set it's value to the get_weather function. */}
@@ -106,6 +107,9 @@ class Forecast extends Component {
           <NavLink to="/Forecast">5-days Forecast</NavLink>
         </nav>
 
+        {fiveDaysForecast}
+
+        {/*
         <Weather
           date={this.state.forecast.date}
           temp={this.state.forecast.temperature}
@@ -119,6 +123,7 @@ class Forecast extends Component {
           winddeg={this.state.forecast.winddeg}
           error={this.state.error}
         />
+        */}
       </div>
     );
   }

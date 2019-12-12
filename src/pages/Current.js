@@ -10,11 +10,21 @@ const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
 class Current extends Component {
   state = {
-    temperature: "",
-    city: "",
-    country: "",
-    humidity: "",
-    description: "",
+    forecast: [
+      {
+        date: "",
+        icon: "",
+        temperature: "",
+        description: "",
+        minTemp: "",
+        maxTemp: "",
+        city: "",
+        country: "",
+        humidity: "",
+        windSpeed: "",
+        winddeg: ""
+      }
+    ],
     error: ""
   };
   componentDidMount() {
@@ -23,7 +33,6 @@ class Current extends Component {
       if (sessionStorage.getItem("location")) {
         //Declare a var to read the data as string then convert to JSON object
         let location = JSON.parse(sessionStorage.getItem("location"));
-        console.log(location);
 
         const api_call = await fetch(
           `http://api.openweathermap.org/data/2.5/weather?q=${location.city},${location.country}&appid=${apiKey}&units=imperial`
@@ -31,6 +40,7 @@ class Current extends Component {
         //convert the response to JSON format
         const data = await api_call.json();
         this.change_state(data);
+        console.log(data);
       }
     })();
   }
@@ -58,45 +68,64 @@ class Current extends Component {
     if (data.name && data.sys.country) {
       console.log(data);
       this.setState({
-        temperature: data.main.temp,
-        city: data.name,
-        country: data.sys.country,
-        humidity: data.main.humidity,
-        description: data.weather[0].description,
+        forecast: [
+          ...this.state.forecast,
+          {
+            date: new Date().getDate(),
+            icon: data.weather[0].icon,
+            temperature: data.main.temp,
+            description: data.weather[0].description,
+            minTemp: data.main.temp_min,
+            maxTemp: data.main.temp_max,
+            city: data.name,
+            country: data.sys.country,
+            humidity: data.main.humidity,
+            windSpeed: data.wind.speed,
+            winddeg: data.wind.deg
+          }
+        ],
         error: ""
       });
     } else {
       this.setState({
-        temperature: "",
-        city: "",
-        country: "",
-        humidity: "",
-        description: "",
+        forecast: [
+          ...this.state.forecast,
+          {
+            date: "",
+            icon: "",
+            temperature: "",
+            description: "",
+            minTemp: "",
+            maxTemp: "",
+            city: "",
+            country: "",
+            humidity: "",
+            windSpeed: "",
+            winddeg: ""
+          }
+        ],
         error: "City not found"
       });
     }
   };
 
   render() {
+    //Populate the forecast data to be render
+    let fiveDaysForecast = this.state.forecast.map((key, data) => {
+      console.log(key);
+      console.log(data);
+      return <Weather val={key} key={data} />;
+    });
     return (
       <div>
         {/* Set it's value to the get_weather function. */}
         <Search get_weather={this.get_weather} />
         <Headline pgTitle="Current Weather" />
-
         <nav className="navcontainer">
           <NavLink to="/">Current Weather</NavLink>
           <NavLink to="/Forecast">5-days Forecast</NavLink>
         </nav>
-
-        <Weather
-          temp={this.state.temperature}
-          city={this.state.city}
-          country={this.state.country}
-          humidity={this.state.humidity}
-          desc={this.state.description}
-          error={this.state.error}
-        />
+        {fiveDaysForecast}
       </div>
     );
   }
