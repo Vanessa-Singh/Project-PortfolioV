@@ -82,7 +82,7 @@ class Forecast extends Component {
   change_state = data => {
     if (data) {
       let fivedays = [];
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 40; i+=8) {
         fivedays[i] = {
           date: `${new Date(data.list[i].dt_txt).getDate()} ${this.month_name(
             new Date(data.list[i].dt_txt)
