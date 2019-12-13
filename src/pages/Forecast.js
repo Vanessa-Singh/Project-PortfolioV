@@ -11,21 +11,7 @@ const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
 class Forecast extends Component {
   state = {
-    forecast: [
-      {
-        date: "",
-        icon: "",
-        temperature: "",
-        description: "",
-        minTemp: "",
-        maxTemp: "",
-        city: "",
-        country: "",
-        humidity: "",
-        windSpeed: "",
-        winddeg: ""
-      }
-    ],
+    forecast: [],
     error: ""
   };
   componentDidMount() {
@@ -34,7 +20,6 @@ class Forecast extends Component {
       if (sessionStorage.getItem("location")) {
         //Declare a var to read the data as string then convert to JSON object
         let location = JSON.parse(sessionStorage.getItem("location"));
-        console.log(location);
 
         const api_call = await fetch(
           `http://api.openweathermap.org/data/2.5/forecast?q=${location.city},${location.country}&appid=${apiKey}&units=imperial`
@@ -42,7 +27,6 @@ class Forecast extends Component {
         //convert the response to JSON format
         const data = await api_call.json();
         this.change_state(data);
-        console.log(data);
       }
     })();
   }
@@ -82,7 +66,7 @@ class Forecast extends Component {
   change_state = data => {
     if (data) {
       let fivedays = [];
-      for (let i = 0; i < 40; i+=8) {
+      for (let i = 0; i < 40; i += 8) {
         fivedays[i] = {
           date: `${new Date(data.list[i].dt_txt).getDate()} ${this.month_name(
             new Date(data.list[i].dt_txt)
@@ -112,6 +96,12 @@ class Forecast extends Component {
   };
 
   render() {
+    let headline = this.state.forecast.map((data, key) => {
+      if (key < 1) {
+        return <Headline key={0} pgTitle={data.city + ", " + data.country} />;
+      }
+      return undefined;
+    });
     //Populate the forecast data to be render
     let fiveDaysForecast = this.state.forecast.map((key, data) => {
       return <Weather val={key} key={data} />;
@@ -120,13 +110,11 @@ class Forecast extends Component {
       <div>
         {/* Set it's value to the get_weather function. */}
         <Search get_weather={this.get_weather} />
-        <Headline pgTitle="5-days Forecast" />
-
+        {headline}
         <nav className="navcontainer">
           <NavLink to="/Current">Current Weather</NavLink>
           <NavLink to="/Forecast">5-days Forecast</NavLink>
         </nav>
-
         {fiveDaysForecast}
       </div>
     );

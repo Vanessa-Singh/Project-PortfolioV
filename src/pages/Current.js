@@ -10,21 +10,7 @@ const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
 class Current extends Component {
   state = {
-    forecast: [
-      {
-        date: "",
-        icon: "",
-        temperature: "",
-        description: "",
-        minTemp: "",
-        maxTemp: "",
-        city: "",
-        country: "",
-        humidity: "",
-        windSpeed: "",
-        winddeg: ""
-      }
-    ],
+    forecast: [],
     error: ""
   };
   componentDidMount() {
@@ -40,7 +26,6 @@ class Current extends Component {
         //convert the response to JSON format
         const data = await api_call.json();
         this.change_state(data);
-        console.log(data);
       }
     })();
   }
@@ -127,22 +112,27 @@ class Current extends Component {
   };
 
   render() {
+    //Populate the headline with the city and country that it was searched
+    let headline = this.state.forecast.map((data, key) => {
+      return <Headline key={key} pgTitle={data.city + ", " + data.country} />;
+    });
     //Populate the forecast data to be render
-    let fiveDaysForecast = this.state.forecast.map((key, data) => {
+    let weather = this.state.forecast.map((data, key) => {
       console.log(key);
       console.log(data);
-      return <Weather val={key} key={data} />;
+      return <Weather val={data} key={key} />;
     });
     return (
       <div>
         {/* Set it's value to the get_weather function. */}
         <Search get_weather={this.get_weather} />
-        <Headline pgTitle="Current Weather" />
+        {headline}
+
         <nav className="navcontainer">
           <NavLink to="/">Current Weather</NavLink>
           <NavLink to="/Forecast">5-days Forecast</NavLink>
         </nav>
-        {fiveDaysForecast}
+        {weather}
       </div>
     );
   }
