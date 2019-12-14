@@ -6,7 +6,9 @@ const Weather = props => {
     return (
       <div className="current forecast" key={props.id}>
         {props.val.temperature && <p>{props.val.temperature}°F</p>}
-        {props.val.icon && <p>{props.val.icon}</p>}
+        {props.val.icon && (<p><img src={"http://openweathermap.org/img/wn/" + props.val.icon + "@2x.png"}
+          alt={props.val.description}
+        /></p>)}
         {props.val.date && <p>{props.val.date}</p>}
         {props.val.description && <p>{props.val.description}</p>}
         {props.val.minTemp && <p>Min Temp: {props.val.minTemp}°</p>}
