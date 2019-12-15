@@ -1,5 +1,7 @@
 import React from "react";
 import Button from "../button/Button";
+//Import CSS
+import "./Search.css";
 
 const Search = props => {
     return (
@@ -8,6 +10,7 @@ const Search = props => {
         <input
           type="text"
           name="city"
+          className="input"
           placeholder="City"
           onChange={props.takecity}
           value={props.city}
@@ -15,6 +18,7 @@ const Search = props => {
         <input
           type="text"
           name="country"
+          className="input"
           placeholder="Country"
           onChange={props.takecountry}
           value={props.country}

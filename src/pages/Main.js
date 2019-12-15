@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Headline from "../components/headline/Headline";
 import Search from "../components/search/Search";
-
+//Import CSS
+import "../App.css";
 class Main extends Component {
-  
   //API call function
   //use async await with the fetch method to make HTTP calls.
   get_weather = async e => {
@@ -20,16 +20,15 @@ class Main extends Component {
     this.props.history.push("/Current");
   };
 
-
   render() {
     return (
-      <div>
+      <div className="main">
         <Headline pgTitle="Weather Outlook" />
         {/* Set up a prop and set it's value to the get_weather function. */}
         <Search get_weather={this.get_weather} />
-       
       </div>
     );
   }
 }
 export default Main;
+

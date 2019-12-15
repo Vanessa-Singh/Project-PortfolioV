@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Headline from "../components/headline/Headline";
 import Search from "../components/search/Search";
 import Weather from "../components/weather/Weather";
+//Import CSS
+import "../App.css";
 //React Router
 import { NavLink } from "react-router-dom";
 
@@ -120,19 +122,26 @@ class Current extends Component {
     let weather = this.state.forecast.map((data, key) => {
       console.log(key);
       console.log(data);
-      return <Weather val={data} key={key} />;
+      return <Weather val={data} key={key} id={key}/>;
     });
     return (
       <div>
-        {/* Set it's value to the get_weather function. */}
-        <Search get_weather={this.get_weather} />
-        {headline}
+        <div className="searchContainer">
+          <Search get_weather={this.get_weather} />
+        </div>
 
-        <nav className="navcontainer">
-          <NavLink to="/">Current Weather</NavLink>
-          <NavLink to="/Forecast">5-days Forecast</NavLink>
-        </nav>
-        {weather}
+        {headline}
+        <div className="dataContainer">
+          <nav className="navContainer">
+            <NavLink className="myBtn" to="/">
+              Current Weather
+            </NavLink>
+            <NavLink className="myBtn" to="/Forecast">
+              5-days Forecast
+            </NavLink>
+          </nav>
+          {weather}
+        </div>
       </div>
     );
   }

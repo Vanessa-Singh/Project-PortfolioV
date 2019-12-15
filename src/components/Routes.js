@@ -5,6 +5,8 @@ import { Route, Switch } from "react-router-dom";
 import Main from "../pages/Main";
 import Current from "../pages/Current";
 import Forecast from "../pages/Forecast";
+//Import CSS stylesheet
+import "../App.css";
 class Routes extends Component {
   render() {
     return (

@@ -1,0 +1,35 @@
+html, body{
+    height: 100%;
+    margin: 0;
+    background: url(./images/weatherBkg.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font: 16px Open-Sans, Roboto, Arial, sans-serif;
+}
+.container{
+    height: 100%;
+}
+.content{
+    height: 100%;
+}
+.main{
+    margin: 10% auto;
+    text-align: center;
+    vertical-align: middle;
+}
+.searchContainer{
+    background: rgba(76, 76, 140, 0.40);
+    margin: 0 auto;
+}
+.dataContainer{
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+.navContainer{
+    display: flex;
+    justify-content: center;
+}
