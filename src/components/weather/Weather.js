@@ -2,12 +2,11 @@ import React from "react";
 import "./Weather.css";
 
 const Weather = props => {
-
+console.log(props);
   let cName = "forecast";
   if(props.id === 0){
     cName = "current";
   }
-  console.log(cName);
   return (
     <div className={cName} key={props.id} id={props.id}>
       <span>
@@ -48,16 +47,15 @@ const Weather = props => {
         {props.val.windSpeed && props.val.winddeg && (
           <div>
             <p>Wind:</p>
-            <p>
+            <p className="speed">
               Speed: <span className="dataValue">{props.val.windSpeed}mph</span>
             </p>
-            <p>
+            <p className="direc">
               Direction: <span className="dataValue">{props.val.winddeg}°</span>
             </p>
           </div>
         )}
       </span>
-      {props.val.error && <p>Error: {props.val.error}</p>}
     </div>
   );
 };

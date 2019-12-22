@@ -11,21 +11,32 @@ const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
 class Forecast extends Component {
   state = {
-    forecast: [],
-    error: ""
+    forecast: []
   };
+
   componentDidMount() {
     (async e => {
+      let location;
       //Retrieve a value by the key from Storage
       if (sessionStorage.getItem("location")) {
         //Declare a var to read the data as string then convert to JSON object
-        let location = JSON.parse(sessionStorage.getItem("location"));
+        location = JSON.parse(sessionStorage.getItem("location"));
+      }
 
-        const api_call = await fetch(
-          `http://api.openweathermap.org/data/2.5/forecast?q=${location.city},${location.country}&appid=${apiKey}&units=imperial`
-        );
+      const thecall = await fetch(
+        `http://api.openweathermap.org/data/2.5/forecast?q=${location.city},${location.country}&appid=${apiKey}&units=imperial`
+      );
+      if (thecall.status !== 200) {
+        //redirect to a 404 page.
+        this.props.history.push({
+          pathname: "/Error404",
+          state: {
+            error: `Error ${thecall.status}: City ${thecall.statusText}`
+          }
+        });
+      } else {
         //convert the response to JSON format
-        const data = await api_call.json();
+        const data = await thecall.json();
         this.change_state(data);
       }
     })();
@@ -63,6 +74,7 @@ class Forecast extends Component {
     ];
     return months[date.getMonth()];
   };
+  //Set all the keys and values from within forecast with the updated values to the state.
   change_state = data => {
     if (data) {
       let fivedays = [];
@@ -84,15 +96,9 @@ class Forecast extends Component {
         };
       }
       this.setState({
-        forecast: fivedays,
-        error: ""
+        forecast: fivedays
       });
-    } else {
-      this.setState({
-        temperature: "",
-        error: "City not found"
-      });
-    }
+    } 
   };
 
   render() {
@@ -100,22 +106,30 @@ class Forecast extends Component {
       if (key < 1) {
         return <Headline key={0} pgTitle={data.city + ", " + data.country} />;
       }
-      return undefined;
+      return "";
     });
     //Populate the forecast data to be render
-    let fiveDaysForecast = this.state.forecast.map((key, data) => {
-      return <Weather val={key} key={data} />;
+    let fiveDaysForecast = this.state.forecast.map((data, key) => {
+      //Validate if the forecast doesn't have any data then notify user
+      return <Weather val={data} key={key} />;
     });
     return (
       <div>
-        {/* Set it's value to the get_weather function. */}
-        <Search get_weather={this.get_weather} />
+        <div className="searchContainer">
+          <Search get_weather={this.get_weather} />
+        </div>
         {headline}
-        <nav className="navcontainer">
-          <NavLink to="/Current">Current Weather</NavLink>
-          <NavLink to="/Forecast">5-days Forecast</NavLink>
-        </nav>
-        {fiveDaysForecast}
+        <div className="dataContainer">
+          <nav className="navContainer">
+            <NavLink className="myBtn" to="/Current">
+              Current Weather
+            </NavLink>
+            <NavLink className="myBtn" to="/Forecast">
+              5-days Forecast
+            </NavLink>
+          </nav>
+          <span className="fivedays">{fiveDaysForecast}</span>
+        </div>
       </div>
     );
   }

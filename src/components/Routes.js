@@ -5,6 +5,9 @@ import { Route, Switch } from "react-router-dom";
 import Main from "../pages/Main";
 import Current from "../pages/Current";
 import Forecast from "../pages/Forecast";
+import Error404 from "../pages/Error404";
+
+
 //Import CSS stylesheet
 import "../App.css";
 class Routes extends Component {
@@ -15,6 +18,7 @@ class Routes extends Component {
           <Route exact path="/" component={Main} />
           <Route exact path="/Current" component={Current} />
           <Route exact path="/Forecast" component={Forecast} />
+          <Route exact path="/Error404" component={Error404} />
         </Switch>
       </section>
     );

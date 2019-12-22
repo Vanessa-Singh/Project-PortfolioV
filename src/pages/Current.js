@@ -12,8 +12,7 @@ const apiKey = "24fce1779d99022f71c6aebca28a5f73";
 
 class Current extends Component {
   state = {
-    forecast: [],
-    error: ""
+    forecast: []
   };
   componentDidMount() {
     (async e => {
@@ -22,12 +21,22 @@ class Current extends Component {
         //Declare a var to read the data as string then convert to JSON object
         let location = JSON.parse(sessionStorage.getItem("location"));
 
-        const api_call = await fetch(
+        const thecall = await fetch(
           `http://api.openweathermap.org/data/2.5/weather?q=${location.city},${location.country}&appid=${apiKey}&units=imperial`
         );
-        //convert the response to JSON format
-        const data = await api_call.json();
-        this.change_state(data);
+        if (thecall.status !== 200) {
+          //redirect to a 404 page.
+          this.props.history.push({
+            pathname: "/Error404",
+            state: {
+              error: `Error ${thecall.status}: City ${thecall.statusText}`
+            }
+          });
+        } else {
+          //convert the response to JSON format
+          const data = await thecall.json();
+          this.change_state(data);
+        }
       }
     })();
   }
@@ -43,12 +52,22 @@ class Current extends Component {
     let location = { city: city, country: country };
     sessionStorage.setItem("location", JSON.stringify(location));
 
-    const api_call = await fetch(
+    const thecall = await fetch(
       `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=imperial`
     );
-    //convert the response to JSON format
-    const data = await api_call.json();
-    this.change_state(data);
+    if (thecall.status !== 200) {
+      //redirect to a 404 page.
+      this.props.history.push({
+        pathname: "/Error404",
+        state: {
+          error: `Error ${thecall.status}: City ${thecall.statusText}`
+        }
+      });
+    } else {
+      //convert the response to JSON format
+      const data = await thecall.json();
+      this.change_state(data);
+    }
   };
   //change month number to month name
   month_name = date => {
@@ -70,10 +89,9 @@ class Current extends Component {
   };
   change_state = data => {
     if (data.name && data.sys.country) {
-      console.log(new Date());
       this.setState({
+        //Set all the keys and values from within forecast with the updated values to the state.
         forecast: [
-          ...this.state.forecast,
           {
             date: `${new Date().getDate()} ${this.month_name(new Date())}`,
             icon: data.weather[0].icon,
@@ -87,28 +105,7 @@ class Current extends Component {
             windSpeed: Math.round(data.wind.speed),
             winddeg: Math.round(data.wind.deg)
           }
-        ],
-        error: ""
-      });
-    } else {
-      this.setState({
-        forecast: [
-          ...this.state.forecast,
-          {
-            date: "",
-            icon: "",
-            temperature: "",
-            description: "",
-            minTemp: "",
-            maxTemp: "",
-            city: "",
-            country: "",
-            humidity: "",
-            windSpeed: "",
-            winddeg: ""
-          }
-        ],
-        error: "City not found"
+        ]
       });
     }
   };
@@ -120,9 +117,7 @@ class Current extends Component {
     });
     //Populate the forecast data to be render
     let weather = this.state.forecast.map((data, key) => {
-      console.log(key);
-      console.log(data);
-      return <Weather val={data} key={key} id={key}/>;
+      return <Weather val={data} key={key} id={key} />;
     });
     return (
       <div>

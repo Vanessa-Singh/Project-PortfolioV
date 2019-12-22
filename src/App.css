@@ -19,6 +19,13 @@ html, body{
     text-align: center;
     vertical-align: middle;
 }
+.main > .bkg{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    padding: 0 10%;
+    padding-bottom: 5%;
+}
 .searchContainer{
     background: rgba(76, 76, 140, 0.40);
     margin: 0 auto;
@@ -28,8 +35,22 @@ html, body{
     text-align: center;
     width: 100%;
     margin: 0 auto;
+    padding: 1% 0 5% 0;
 }
 .navContainer{
     display: flex;
     justify-content: center;
+}
+.errorMessage{
+    text-align: center;
+    flex-wrap: wrap;
+    font-size: 1.25rem;
+    margin: 16.25% 0;
+}
+.main > .bkg > div{
+    margin: 1rem 2%;
+}
+.fivedays {
+    margin: 2% 1%;
+    display: flex;
 }
