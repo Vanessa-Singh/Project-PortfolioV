@@ -10,9 +10,14 @@ Workflow is described in 4 categories representing each weekly task for the mont
 	During the first week I research for possible project ideas that could work with the assigned requirements for the project. I came to find and liked that a weather app could be an excellent project to work on this month. I continued researching to what can I create for the components and the multiple states that are required as well other requirements. Once a plan has been written down on a piece of paper, I proceeded to demonstrate the proposal to the instructor.
 
 
+# 2. Early Development
+	In the second week I began to update the wireframe I had created in week one. I chose the colors and created a mockup of each view. I labeled the views Main, Current and Forecast. I then proceeded to start developing the project by installing React first then creating the components and lastly setting the pages, what will be the state views. 
 
+# 3. Continued development
+	At this stage I have all the components created and the initial view of the pages. I worked throughout this week giving functionalities to the components and validating that each event works how it was intended by running constant test in the app. I then proceeded to start styling the app.
 
-
+# 4. Presentation
+	For the last week I worked mainly on design and tweaking any bugs or error that I came across while continuously testing the app. I then realized that the best option to demonstrate the user a 404 error is by creating another state view for the error. I completed most of the design and ensure that no bug or unwanted error came up by continuously testing the app.
 
 
 
