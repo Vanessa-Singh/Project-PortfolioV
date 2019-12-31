@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Project-PortfolioV/static/css/main.17dc2f24.chunk.css",
+    "main.js": "/Project-PortfolioV/static/js/main.a0922ef6.chunk.js",
+    "main.js.map": "/Project-PortfolioV/static/js/main.a0922ef6.chunk.js.map",
+    "runtime-main.js": "/Project-PortfolioV/static/js/runtime-main.858975c8.js",
+    "runtime-main.js.map": "/Project-PortfolioV/static/js/runtime-main.858975c8.js.map",
+    "static/js/2.37da85a9.chunk.js": "/Project-PortfolioV/static/js/2.37da85a9.chunk.js",
+    "static/js/2.37da85a9.chunk.js.map": "/Project-PortfolioV/static/js/2.37da85a9.chunk.js.map",
+    "index.html": "/Project-PortfolioV/index.html",
+    "precache-manifest.7560e05310531ac102ba4c00d2e60e54.js": "/Project-PortfolioV/precache-manifest.7560e05310531ac102ba4c00d2e60e54.js",
+    "service-worker.js": "/Project-PortfolioV/service-worker.js",
+    "static/css/main.17dc2f24.chunk.css.map": "/Project-PortfolioV/static/css/main.17dc2f24.chunk.css.map",
+    "static/media/App.css": "/Project-PortfolioV/static/media/weatherBkg.cf7785aa.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.858975c8.js",
+    "static/js/2.37da85a9.chunk.js",
+    "static/css/main.17dc2f24.chunk.css",
+    "static/js/main.a0922ef6.chunk.js"
+  ]
+}
