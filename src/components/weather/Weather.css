@@ -1,0 +1,43 @@
+.forecast{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding: 2px 16px;
+    margin: 0 1%;
+}
+.forecast:hover{
+     box-shadow: 0 8px 16px 0 rgb(76, 76, 140)
+}
+.forecast, .current{
+    font-size: 20px;
+}
+.current{
+    display: flex;
+    justify-content: center;
+}
+.current > span{
+    width: 25rem;
+    text-align: justify;
+    margin: 0 2rem;
+}
+.icon{
+    margin: 0;
+}
+.descrip{
+    font-weight: bold;
+    font-size: 30px;
+    text-transform: capitalize;
+    margin: 0;
+}
+.temp{
+    font-size: 7rem;
+    font-weight: bold;
+    color: #8D5093;
+    margin: 0;
+}
+.minTemp, .maxTemp, .speed, .direc{
+    display: inline;
+    margin-right: 2.5rem;
+}
+.dataValue{
+    margin-left: 0.5rem;
+}
